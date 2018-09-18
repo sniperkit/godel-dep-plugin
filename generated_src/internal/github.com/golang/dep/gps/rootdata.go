@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -8,46 +13,47 @@ import (
 	"sort"
 
 	"github.com/armon/go-radix"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 // rootdata holds static data and constraining rules from the root project for
 // use in solving.
 type rootdata struct {
 	// Path to the root of the project on which gps is operating.
-	dir	string
+	dir string
 
 	// Ruleset for ignored import paths.
-	ir	*pkgtree.IgnoredRuleset
+	ir *pkgtree.IgnoredRuleset
 
 	// Map of packages to require.
-	req	map[string]bool
+	req map[string]bool
 
 	// A ProjectConstraints map containing the validated (guaranteed non-empty)
 	// overrides declared by the root manifest.
-	ovr	ProjectConstraints
+	ovr ProjectConstraints
 
 	// A map of the ProjectRoot (local names) that should be allowed to change
-	chng	map[ProjectRoot]struct{}
+	chng map[ProjectRoot]struct{}
 
 	// Flag indicating all projects should be allowed to change, without regard
 	// for lock.
-	chngall	bool
+	chngall bool
 
 	// A map of the project names listed in the root's lock.
-	rlm	map[ProjectRoot]LockedProject
+	rlm map[ProjectRoot]LockedProject
 
 	// A defensively copied instance of the root manifest.
-	rm	SimpleManifest
+	rm SimpleManifest
 
 	// A defensively copied instance of the root lock.
-	rl	safeLock
+	rl safeLock
 
 	// A defensively copied instance of params.RootPackageTree
-	rpt	pkgtree.PackageTree
+	rpt pkgtree.PackageTree
 
 	// The ProjectAnalyzer to use for all GetManifestAndLock calls.
-	an	ProjectAnalyzer
+	an ProjectAnalyzer
 }
 
 // externalImportList returns a list of the unique imports from the root data.
@@ -87,8 +93,8 @@ func (rd rootdata) getApplicableConstraints(stdLibFn func(string) bool) []workin
 	for pr, pp := range rd.ovr {
 		if _, has := pc[pr]; !has {
 			cpp := ProjectProperties{
-				Constraint:	pp.Constraint,
-				Source:		pp.Source,
+				Constraint: pp.Constraint,
+				Source:     pp.Source,
 			}
 			if cpp.Constraint == nil {
 				cpp.Constraint = anyConstraint{}
@@ -102,8 +108,8 @@ func (rd rootdata) getApplicableConstraints(stdLibFn func(string) bool) []workin
 	combined := rd.ovr.overrideAll(pc)
 
 	type wccount struct {
-		count	int
-		wc	workingConstraint
+		count int
+		wc    workingConstraint
 	}
 	xt := radix.New()
 	for _, wc := range combined {
@@ -186,7 +192,7 @@ func (rd rootdata) rootAtom() atomWithPackages {
 		// It's sort of OK because the root never makes it out into the results.
 		// We may need a more elegant solution if we discover other side
 		// effects, though.
-		v:	rootRev,
+		v: rootRev,
 	}
 
 	list := make([]string, 0, len(rd.rpt.Packages))
@@ -198,7 +204,7 @@ func (rd rootdata) rootAtom() atomWithPackages {
 	sort.Strings(list)
 
 	return atomWithPackages{
-		a:	a,
-		pl:	list,
+		a:  a,
+		pl: list,
 	}
 }

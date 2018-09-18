@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -52,7 +57,7 @@ func DirWalk(osDirname string, walkFn DirWalkFunc) error {
 	// starting directory itself.
 	queue := []string{""}
 
-	var osRelative string	// os-specific relative pathname under directory name
+	var osRelative string // os-specific relative pathname under directory name
 
 	// As we enumerate over the queue and encounter a directory, its children
 	// will be added to the work queue.
@@ -89,13 +94,13 @@ func DirWalk(osDirname string, walkFn DirWalkFunc) error {
 					// as the current node.
 					osParent := filepath.Dir(osPathname) + osPathSeparator
 					for len(queue) > 0 && strings.HasPrefix(queue[0], osParent) {
-						queue = queue[1:]	// drop sibling from queue
+						queue = queue[1:] // drop sibling from queue
 					}
 				}
 
 				continue
 			}
-			return errors.Wrap(err, "DirWalkFunction")	// wrap error returned by walkFn
+			return errors.Wrap(err, "DirWalkFunction") // wrap error returned by walkFn
 		}
 
 		if fi.IsDir() {
@@ -124,7 +129,7 @@ func sortedChildrenFromDirname(osDirname string) ([]string, error) {
 		return nil, errors.Wrap(err, "cannot Open")
 	}
 
-	osChildrenNames, err := fh.Readdirnames(0)	// 0: read names of all children
+	osChildrenNames, err := fh.Readdirnames(0) // 0: read names of all children
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot Readdirnames")
 	}

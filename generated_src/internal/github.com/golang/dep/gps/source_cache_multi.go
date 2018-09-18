@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -5,7 +10,7 @@
 package gps
 
 import (
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 // A multiCache manages two cache levels, ephemeral in-memory and persistent on-disk.

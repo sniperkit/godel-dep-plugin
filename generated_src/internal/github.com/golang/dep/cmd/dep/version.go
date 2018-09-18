@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -5,29 +10,29 @@
 package amalgomated
 
 import (
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
 	"runtime"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
 )
 
 var (
-	version		= "devel"
-	buildDate	string
-	commitHash	string
+	version    = "devel"
+	buildDate  string
+	commitHash string
 )
 
 const versionHelp = `Show the dep version information`
 
-func (cmd *versionCommand) Name() string	{ return "version" }
+func (cmd *versionCommand) Name() string { return "version" }
 func (cmd *versionCommand) Args() string {
 	return ""
 }
-func (cmd *versionCommand) ShortHelp() string	{ return versionHelp }
-func (cmd *versionCommand) LongHelp() string	{ return versionHelp }
-func (cmd *versionCommand) Hidden() bool	{ return false }
+func (cmd *versionCommand) ShortHelp() string { return versionHelp }
+func (cmd *versionCommand) LongHelp() string  { return versionHelp }
+func (cmd *versionCommand) Hidden() bool      { return false }
 
-func (cmd *versionCommand) Register(fs *flag.FlagSet)	{}
+func (cmd *versionCommand) Register(fs *flag.FlagSet) {}
 
 type versionCommand struct{}
 

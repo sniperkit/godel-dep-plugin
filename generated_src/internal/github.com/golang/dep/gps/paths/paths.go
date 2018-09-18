@@ -1,10 +1,17 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
 package paths
 
-import "strings"
+import (
+	"strings"
+)
 
 // IsStandardImportPath reports whether $GOROOT/src/path should be considered
 // part of the standard distribution. For historical reasons we allow people to add

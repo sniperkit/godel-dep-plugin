@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -9,25 +14,25 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
 )
 
 const (
 	// ConsTypeConstraint represents a constraint
-	ConsTypeConstraint	= "constraint"
+	ConsTypeConstraint = "constraint"
 
 	// ConsTypeHint represents a constraint type hint
-	ConsTypeHint	= "hint"
+	ConsTypeHint = "hint"
 
 	// DepTypeDirect represents a direct dependency
-	DepTypeDirect	= "direct dep"
+	DepTypeDirect = "direct dep"
 
 	// DepTypeTransitive represents a transitive dependency,
 	// or a dependency of a dependency
-	DepTypeTransitive	= "transitive dep"
+	DepTypeTransitive = "transitive dep"
 
 	// DepTypeImported represents a dependency imported by an external tool
-	DepTypeImported	= "imported dep"
+	DepTypeImported = "imported dep"
 )
 
 // ConstraintFeedback holds project constraint feedback data
@@ -38,9 +43,9 @@ type ConstraintFeedback struct {
 // NewConstraintFeedback builds a feedback entry for a constraint in the manifest.
 func NewConstraintFeedback(pc gps.ProjectConstraint, depType string) *ConstraintFeedback {
 	cf := &ConstraintFeedback{
-		Constraint:	pc.Constraint.String(),
-		ProjectPath:	string(pc.Ident.ProjectRoot),
-		DependencyType:	depType,
+		Constraint:     pc.Constraint.String(),
+		ProjectPath:    string(pc.Ident.ProjectRoot),
+		DependencyType: depType,
 	}
 
 	if _, ok := pc.Constraint.(gps.Revision); ok {
@@ -55,15 +60,15 @@ func NewConstraintFeedback(pc gps.ProjectConstraint, depType string) *Constraint
 // NewLockedProjectFeedback builds a feedback entry for a project in the lock.
 func NewLockedProjectFeedback(lp gps.LockedProject, depType string) *ConstraintFeedback {
 	cf := &ConstraintFeedback{
-		ProjectPath:	string(lp.Ident().ProjectRoot),
-		DependencyType:	depType,
+		ProjectPath:    string(lp.Ident().ProjectRoot),
+		DependencyType: depType,
 	}
 
 	switch vt := lp.Version().(type) {
 	case gps.PairedVersion:
 		cf.LockedVersion = vt.String()
 		cf.Revision = vt.Revision().String()
-	case gps.UnpairedVersion:	// Logically this should never occur, but handle for completeness sake
+	case gps.UnpairedVersion: // Logically this should never occur, but handle for completeness sake
 		cf.LockedVersion = vt.String()
 	case gps.Revision:
 		cf.Revision = vt.String()

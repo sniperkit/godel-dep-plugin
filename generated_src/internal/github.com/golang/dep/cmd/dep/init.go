@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -6,17 +11,18 @@ package amalgomated
 
 import (
 	"context"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"time"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 const initShortHelp = `Set up a new Go project, or migrate an existing one`
@@ -51,11 +57,11 @@ direct dependencies. Gopkg.lock will be written with precise versions, and
 vendor/ will be populated with the precise versions written to Gopkg.lock.
 `
 
-func (cmd *initCommand) Name() string		{ return "init" }
-func (cmd *initCommand) Args() string		{ return "[root]" }
-func (cmd *initCommand) ShortHelp() string	{ return initShortHelp }
-func (cmd *initCommand) LongHelp() string	{ return initLongHelp }
-func (cmd *initCommand) Hidden() bool		{ return false }
+func (cmd *initCommand) Name() string      { return "init" }
+func (cmd *initCommand) Args() string      { return "[root]" }
+func (cmd *initCommand) ShortHelp() string { return initShortHelp }
+func (cmd *initCommand) LongHelp() string  { return initLongHelp }
+func (cmd *initCommand) Hidden() bool      { return false }
 
 func (cmd *initCommand) Register(fs *flag.FlagSet) {
 	fs.BoolVar(&cmd.noExamples, "no-examples", false, "don't include example in Gopkg.toml")
@@ -64,9 +70,9 @@ func (cmd *initCommand) Register(fs *flag.FlagSet) {
 }
 
 type initCommand struct {
-	noExamples	bool
-	skipTools	bool
-	gopath		bool
+	noExamples bool
+	skipTools  bool
+	gopath     bool
 }
 
 func (cmd *initCommand) Run(ctx *dep.Ctx, args []string) error {
@@ -129,15 +135,15 @@ func (cmd *initCommand) Run(ctx *dep.Ctx, args []string) error {
 		}
 	}
 
-	rootAnalyzer.skipTools = true	// Don't import external config during solve for now
-	copyLock := *p.Lock		// Copy lock before solving. Use this to separate new lock projects from solved lock
+	rootAnalyzer.skipTools = true // Don't import external config during solve for now
+	copyLock := *p.Lock           // Copy lock before solving. Use this to separate new lock projects from solved lock
 
 	params := gps.SolveParameters{
-		RootDir:		root,
-		RootPackageTree:	ptree,
-		Manifest:		p.Manifest,
-		Lock:			p.Lock,
-		ProjectAnalyzer:	rootAnalyzer,
+		RootDir:         root,
+		RootPackageTree: ptree,
+		Manifest:        p.Manifest,
+		Lock:            p.Lock,
+		ProjectAnalyzer: rootAnalyzer,
 	}
 
 	if ctx.Verbose {

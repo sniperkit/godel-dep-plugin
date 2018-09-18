@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2018 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -7,8 +12,9 @@ package amalgomated
 import (
 	"context"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
 )
 
 // TODO solve failures can be really creative - we need to be similarly creative

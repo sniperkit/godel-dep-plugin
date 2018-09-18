@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -8,8 +13,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 // Analyzer implements gps.ProjectAnalyzer.
@@ -47,7 +52,7 @@ func (a Analyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gps.Man
 // Info returns Analyzer's name and version info.
 func (a Analyzer) Info() gps.ProjectAnalyzerInfo {
 	return gps.ProjectAnalyzerInfo{
-		Name:		"dep",
-		Version:	1,
+		Name:    "dep",
+		Version: 1,
 	}
 }

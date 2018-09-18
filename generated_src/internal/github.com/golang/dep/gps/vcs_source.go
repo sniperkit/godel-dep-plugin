@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -14,9 +19,10 @@ import (
 	"strings"
 
 	"github.com/Masterminds/semver"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 type baseVCSSource struct {
@@ -332,8 +338,8 @@ func (s *gitSource) listVersions(ctx context.Context) (vlist []PairedVersion, er
 				}
 			}
 			v = branchVersion{
-				name:		n,
-				isDefault:	isdef,
+				name:      n,
+				isDefault: isdef,
 			}.Pair(rev).(PairedVersion)
 
 			vlist[uniq] = v
@@ -388,11 +394,11 @@ func (s *gitSource) listVersions(ctx context.Context) (vlist []PairedVersion, er
 // according to the input URL.
 type gopkginSource struct {
 	gitSource
-	major		uint64
-	unstable	bool
+	major    uint64
+	unstable bool
 	// The aliased URL we report as being the one we talk to, even though we're
 	// actually talking directly to GitHub.
-	aliasURL	string
+	aliasURL string
 }
 
 func (s *gopkginSource) upstreamURL() string {
@@ -408,7 +414,7 @@ func (s *gopkginSource) listVersions(ctx context.Context) ([]PairedVersion, erro
 	// Apply gopkg.in's filtering rules
 	vlist := make([]PairedVersion, len(ovlist))
 	k := 0
-	var dbranch int	// index of branch to be marked default
+	var dbranch int // index of branch to be marked default
 	var bsv semver.Version
 	var defaultBranch PairedVersion
 	tryDefaultAsV0 := s.major == 0
@@ -467,8 +473,8 @@ func (s *gopkginSource) listVersions(ctx context.Context) ([]PairedVersion, erro
 	if bsv != (semver.Version{}) {
 		dbv := vlist[dbranch].(versionPair)
 		vlist[dbranch] = branchVersion{
-			name:		dbv.v.(branchVersion).name,
-			isDefault:	true,
+			name:      dbv.v.(branchVersion).name,
+			isDefault: true,
 		}.Pair(dbv.r)
 	}
 
@@ -527,7 +533,7 @@ func (s *bzrSource) listVersions(ctx context.Context) ([]PairedVersion, error) {
 
 	// Now, all the tags.
 	for _, line := range all {
-		idx := bytes.IndexByte(line, 32)	// space
+		idx := bytes.IndexByte(line, 32) // space
 		v := NewVersion(string(line[:idx]))
 		r := Revision(bytes.TrimSpace(line[idx:]))
 		vlist = append(vlist, v.Pair(r))
@@ -613,7 +619,7 @@ func (s *hgSource) listVersions(ctx context.Context) ([]PairedVersion, error) {
 			continue
 		}
 
-		idx := bytes.IndexByte(pair[0], 32)	// space
+		idx := bytes.IndexByte(pair[0], 32) // space
 		v := NewVersion(string(pair[0][:idx])).Pair(Revision(pair[1])).(PairedVersion)
 		vlist = append(vlist, v)
 	}
@@ -642,7 +648,7 @@ func (s *hgSource) listVersions(ctx context.Context) ([]PairedVersion, error) {
 			}
 
 			// Split on colon; this gets us the rev and the branch plus local revno
-			idx := bytes.IndexByte(pair[0], 32)	// space
+			idx := bytes.IndexByte(pair[0], 32) // space
 			// if it's the magic @ marker, make that the default branch
 			str := string(pair[0][:idx])
 			var v PairedVersion
@@ -673,7 +679,7 @@ func (s *hgSource) listVersions(ctx context.Context) ([]PairedVersion, error) {
 
 		// Split on colon; this gets us the rev and the branch plus local revno
 		pair := bytes.Split(line, []byte(":"))
-		idx := bytes.IndexByte(pair[0], 32)	// space
+		idx := bytes.IndexByte(pair[0], 32) // space
 		str := string(pair[0][:idx])
 		// if there was no magic @ bookmark, and this is mercurial's magic
 		// "default" branch, then mark it as default branch

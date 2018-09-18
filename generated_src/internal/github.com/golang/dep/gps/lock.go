@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -70,10 +75,10 @@ func sortedLockedProjects(lps []LockedProject) []LockedProject {
 // URI for accessing it, the path at which it should be placed within a vendor
 // directory, and the packages that are used in it.
 type LockedProject struct {
-	pi	ProjectIdentifier
-	v	UnpairedVersion
-	r	Revision
-	pkgs	[]string
+	pi   ProjectIdentifier
+	v    UnpairedVersion
+	r    Revision
+	pkgs []string
 }
 
 // SimpleLock is a helper for tools to easily describe lock data when they know
@@ -110,8 +115,8 @@ func NewLockedProject(id ProjectIdentifier, v Version, pkgs []string) LockedProj
 	}
 
 	lp := LockedProject{
-		pi:	id,
-		pkgs:	pkgs,
+		pi:   id,
+		pkgs: pkgs,
 	}
 
 	switch tv := v.(type) {
@@ -205,8 +210,8 @@ func (lp LockedProject) String() string {
 }
 
 type safeLock struct {
-	h	[]byte
-	p	[]LockedProject
+	h []byte
+	p []LockedProject
 }
 
 func (sl safeLock) InputsDigest() []byte {
@@ -226,8 +231,8 @@ func prepLock(l Lock) safeLock {
 	pl := l.Projects()
 
 	rl := safeLock{
-		h:	l.InputsDigest(),
-		p:	make([]LockedProject, len(pl)),
+		h: l.InputsDigest(),
+		p: make([]LockedProject, len(pl)),
 	}
 	copy(rl.p, pl)
 

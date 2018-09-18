@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -10,8 +15,9 @@ import (
 	"log"
 	"sync"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 // sourceState represent the states that a source can be in, depending on how
@@ -21,7 +27,7 @@ import (
 type sourceState int32
 
 const (
-	sourceIsSetUp	sourceState	= 1 << iota
+	sourceIsSetUp sourceState = 1 << iota
 	sourceExistsUpstream
 	sourceExistsLocally
 	sourceHasLatestVersionList
@@ -29,8 +35,8 @@ const (
 )
 
 type srcReturnChans struct {
-	ret	chan *sourceGateway
-	err	chan error
+	ret chan *sourceGateway
+	err chan error
 }
 
 func (rc srcReturnChans) awaitReturn() (sg *sourceGateway, err error) {
@@ -42,30 +48,30 @@ func (rc srcReturnChans) awaitReturn() (sg *sourceGateway, err error) {
 }
 
 type sourceCoordinator struct {
-	supervisor	*supervisor
-	srcmut		sync.RWMutex	// guards srcs and nameToURL maps
-	srcs		map[string]*sourceGateway
-	nameToURL	map[string]string
-	psrcmut		sync.Mutex	// guards protoSrcs map
-	protoSrcs	map[string][]srcReturnChans
-	deducer		deducer
-	cachedir	string
-	logger		*log.Logger
+	supervisor *supervisor
+	srcmut     sync.RWMutex // guards srcs and nameToURL maps
+	srcs       map[string]*sourceGateway
+	nameToURL  map[string]string
+	psrcmut    sync.Mutex // guards protoSrcs map
+	protoSrcs  map[string][]srcReturnChans
+	deducer    deducer
+	cachedir   string
+	logger     *log.Logger
 }
 
 func newSourceCoordinator(superv *supervisor, deducer deducer, cachedir string, logger *log.Logger) *sourceCoordinator {
 	return &sourceCoordinator{
-		supervisor:	superv,
-		deducer:	deducer,
-		cachedir:	cachedir,
-		logger:		logger,
-		srcs:		make(map[string]*sourceGateway),
-		nameToURL:	make(map[string]string),
-		protoSrcs:	make(map[string][]srcReturnChans),
+		supervisor: superv,
+		deducer:    deducer,
+		cachedir:   cachedir,
+		logger:     logger,
+		srcs:       make(map[string]*sourceGateway),
+		nameToURL:  make(map[string]string),
+		protoSrcs:  make(map[string][]srcReturnChans),
 	}
 }
 
-func (sc *sourceCoordinator) close()	{}
+func (sc *sourceCoordinator) close() {}
 
 func (sc *sourceCoordinator) getSourceGatewayFor(ctx context.Context, id ProjectIdentifier) (*sourceGateway, error) {
 	if err := sc.supervisor.ctx.Err(); err != nil {
@@ -136,8 +142,8 @@ func (sc *sourceCoordinator) getSourceGatewayFor(ctx context.Context, id Project
 		// Another goroutine is already working on this normalizedName. Fold
 		// in with that work by attaching our return channels to the list.
 		rc := srcReturnChans{
-			ret:	make(chan *sourceGateway, 1),
-			err:	make(chan error, 1),
+			ret: make(chan *sourceGateway, 1),
+			err: make(chan error, 1),
 		}
 		sc.protoSrcs[foldedNormalName] = append(chans, rc)
 		sc.psrcmut.Unlock()
@@ -248,20 +254,20 @@ func (sc *sourceCoordinator) getSourceGatewayFor(ctx context.Context, id Project
 // sourceGateways manage all incoming calls for data from sources, serializing
 // and caching them as needed.
 type sourceGateway struct {
-	cachedir	string
-	maybe		maybeSource
-	srcState	sourceState
-	src		source
-	cache		singleSourceCache
-	mu		sync.Mutex	// global lock, serializes all behaviors
-	suprvsr		*supervisor
+	cachedir string
+	maybe    maybeSource
+	srcState sourceState
+	src      source
+	cache    singleSourceCache
+	mu       sync.Mutex // global lock, serializes all behaviors
+	suprvsr  *supervisor
 }
 
 func newSourceGateway(maybe maybeSource, superv *supervisor, cachedir string) *sourceGateway {
 	sg := &sourceGateway{
-		maybe:		maybe,
-		cachedir:	cachedir,
-		suprvsr:	superv,
+		maybe:    maybe,
+		cachedir: cachedir,
+		suprvsr:  superv,
 	}
 	sg.cache = sg.createSingleSourceCache()
 

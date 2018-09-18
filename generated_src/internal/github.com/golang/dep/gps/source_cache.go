@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -8,7 +13,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 // singleSourceCache provides a method set for storing and retrieving data about
@@ -61,20 +66,20 @@ type singleSourceCache interface {
 }
 
 type singleSourceCacheMemory struct {
-	mut	sync.RWMutex	// protects all fields
-	infos	map[ProjectAnalyzerInfo]map[Revision]projectInfo
-	ptrees	map[Revision]pkgtree.PackageTree
-	vList	[]PairedVersion	// replaced, never modified
-	vMap	map[UnpairedVersion]Revision
-	rMap	map[Revision][]UnpairedVersion
+	mut    sync.RWMutex // protects all fields
+	infos  map[ProjectAnalyzerInfo]map[Revision]projectInfo
+	ptrees map[Revision]pkgtree.PackageTree
+	vList  []PairedVersion // replaced, never modified
+	vMap   map[UnpairedVersion]Revision
+	rMap   map[Revision][]UnpairedVersion
 }
 
 func newMemoryCache() singleSourceCache {
 	return &singleSourceCacheMemory{
-		infos:	make(map[ProjectAnalyzerInfo]map[Revision]projectInfo),
-		ptrees:	make(map[Revision]pkgtree.PackageTree),
-		vMap:	make(map[UnpairedVersion]Revision),
-		rMap:	make(map[Revision][]UnpairedVersion),
+		infos:  make(map[ProjectAnalyzerInfo]map[Revision]projectInfo),
+		ptrees: make(map[Revision]pkgtree.PackageTree),
+		vMap:   make(map[UnpairedVersion]Revision),
+		rMap:   make(map[Revision][]UnpairedVersion),
 	}
 }
 

@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -11,10 +16,10 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	fb "github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/feedback"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	fb "github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/feedback"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers"
 )
 
 // rootAnalyzer supplies manifest/lock data from both dep and external tool's
@@ -23,18 +28,18 @@ import (
 // * When used by the solver for dependencies, it first looks for dep config,
 //   then external tools.
 type rootAnalyzer struct {
-	skipTools	bool
-	ctx		*dep.Ctx
-	sm		gps.SourceManager
-	directDeps	map[gps.ProjectRoot]bool
+	skipTools  bool
+	ctx        *dep.Ctx
+	sm         gps.SourceManager
+	directDeps map[gps.ProjectRoot]bool
 }
 
 func newRootAnalyzer(skipTools bool, ctx *dep.Ctx, directDeps map[gps.ProjectRoot]bool, sm gps.SourceManager) *rootAnalyzer {
 	return &rootAnalyzer{
-		skipTools:	skipTools,
-		ctx:		ctx,
-		sm:		sm,
-		directDeps:	directDeps,
+		skipTools:  skipTools,
+		ctx:        ctx,
+		sm:         sm,
+		directDeps: directDeps,
 	}
 }
 
@@ -203,7 +208,7 @@ func (a *rootAnalyzer) FinalizeRootManifestAndLock(m *dep.Manifest, l *dep.Lock,
 // Info provides metadata on the analyzer algorithm used during solve.
 func (a *rootAnalyzer) Info() gps.ProjectAnalyzerInfo {
 	return gps.ProjectAnalyzerInfo{
-		Name:		"dep",
-		Version:	1,
+		Name:    "dep",
+		Version: 1,
 	}
 }

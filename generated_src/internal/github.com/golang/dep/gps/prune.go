@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -11,8 +16,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 // PruneOptions represents the pruning options used to write the dependecy tree.
@@ -20,7 +26,7 @@ type PruneOptions uint8
 
 const (
 	// PruneNestedVendorDirs indicates if nested vendor directories should be pruned.
-	PruneNestedVendorDirs	PruneOptions	= 1 << iota
+	PruneNestedVendorDirs PruneOptions = 1 << iota
 	// PruneUnusedPackages indicates if unused Go packages should be pruned.
 	PruneUnusedPackages
 	// PruneNonGoFiles indicates if non-Go files should be pruned.
@@ -42,10 +48,10 @@ const (
 // a cascading tree of pruning values, as expressed in CascadingPruneOptions; a
 // simple boolean cannot delineate between "false" and "none".
 type PruneOptionSet struct {
-	NestedVendor	uint8
-	UnusedPackages	uint8
-	NonGoFiles	uint8
-	GoTests		uint8
+	NestedVendor   uint8
+	UnusedPackages uint8
+	NonGoFiles     uint8
+	GoTests        uint8
 }
 
 // CascadingPruneOptions is a set of rules for pruning a dependency tree.
@@ -54,8 +60,8 @@ type PruneOptionSet struct {
 // single PruneOptions bitfield. These global rules will cascade down to
 // individual project rules, unless superseded.
 type CascadingPruneOptions struct {
-	DefaultOptions		PruneOptions
-	PerProjectOptions	map[ProjectRoot]PruneOptionSet
+	DefaultOptions    PruneOptions
+	PerProjectOptions map[ProjectRoot]PruneOptionSet
 }
 
 // PruneOptionsFor returns the PruneOptions bits for the given project,
@@ -107,14 +113,14 @@ func (o CascadingPruneOptions) PruneOptionsFor(pr ProjectRoot) PruneOptions {
 
 func defaultCascadingPruneOptions() CascadingPruneOptions {
 	return CascadingPruneOptions{
-		DefaultOptions:		PruneNestedVendorDirs,
-		PerProjectOptions:	map[ProjectRoot]PruneOptionSet{},
+		DefaultOptions:    PruneNestedVendorDirs,
+		PerProjectOptions: map[ProjectRoot]PruneOptionSet{},
 	}
 }
 
 var (
 	// licenseFilePrefixes is a list of name prefixes for license files.
-	licenseFilePrefixes	= []string{
+	licenseFilePrefixes = []string{
 		"license",
 		"licence",
 		"copying",
@@ -124,7 +130,7 @@ var (
 	}
 	// legalFileSubstrings contains substrings that are likey part of a legal
 	// declaration file.
-	legalFileSubstrings	= []string{
+	legalFileSubstrings = []string{
 		"authors",
 		"contributors",
 		"legal",

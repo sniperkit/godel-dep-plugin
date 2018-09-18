@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -13,10 +18,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 )
 
 const govendorDir = "vendor"
@@ -26,7 +32,7 @@ const govendorName = "vendor.json"
 type Importer struct {
 	*base.Importer
 
-	file	govendorFile
+	file govendorFile
 }
 
 // NewImporter for govendor.
@@ -36,18 +42,18 @@ func NewImporter(logger *log.Logger, verbose bool, sm gps.SourceManager) *Import
 
 // File is the structure of the vendor file.
 type govendorFile struct {
-	RootPath	string	// Import path of vendor folder
-	Ignore		string
-	Package		[]*govendorPackage
+	RootPath string // Import path of vendor folder
+	Ignore   string
+	Package  []*govendorPackage
 }
 
 // Package represents each package.
 type govendorPackage struct {
 	// See the vendor spec for definitions.
-	Origin		string
-	Path		string
-	Revision	string
-	Version		string
+	Origin   string
+	Path     string
+	Revision string
+	Version  string
 }
 
 // Name of the importer.
@@ -109,9 +115,9 @@ func (g *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 		// so we are not requiring it to be set during import
 
 		ip := base.ImportedPackage{
-			Name:		pkg.Path,
-			Source:		pkg.Origin,
-			LockHint:	pkg.Revision,
+			Name:     pkg.Path,
+			Source:   pkg.Origin,
+			LockHint: pkg.Revision,
 		}
 		packages = append(packages, ip)
 	}
@@ -133,9 +139,9 @@ func (g *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 
 			var ignorePattern string
 			_, err := g.SourceManager.DeduceProjectRoot(i)
-			if err == nil {	// external package
+			if err == nil { // external package
 				ignorePattern = i
-			} else {	// relative package path in the current project
+			} else { // relative package path in the current project
 				ignorePattern = path.Join(string(pr), i)
 			}
 

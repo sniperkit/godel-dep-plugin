@@ -1,10 +1,17 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
 package gps
 
-import "github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+import (
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+)
 
 // Manifest represents manifest-type data for a project at a particular version.
 // The constraints expressed in a manifest determine the set of versions that
@@ -79,9 +86,9 @@ func (m SimpleManifest) DependencyConstraints() ProjectConstraints {
 // simpleRootManifest exists so that we have a safe value to swap into solver
 // params when a nil Manifest is provided.
 type simpleRootManifest struct {
-	c, ovr	ProjectConstraints
-	ig	*pkgtree.IgnoredRuleset
-	req	map[string]bool
+	c, ovr ProjectConstraints
+	ig     *pkgtree.IgnoredRuleset
+	req    map[string]bool
 }
 
 func (m simpleRootManifest) DependencyConstraints() ProjectConstraints {
@@ -98,9 +105,9 @@ func (m simpleRootManifest) RequiredPackages() map[string]bool {
 }
 func (m simpleRootManifest) dup() simpleRootManifest {
 	m2 := simpleRootManifest{
-		c:	make(ProjectConstraints, len(m.c)),
-		ovr:	make(ProjectConstraints, len(m.ovr)),
-		req:	make(map[string]bool, len(m.req)),
+		c:   make(ProjectConstraints, len(m.c)),
+		ovr: make(ProjectConstraints, len(m.ovr)),
+		req: make(map[string]bool, len(m.req)),
 	}
 
 	for k, v := range m.c {

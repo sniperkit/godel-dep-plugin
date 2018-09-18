@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -8,7 +13,6 @@ package amalgomated
 
 import (
 	"bytes"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
 	"fmt"
 	"io"
 	"log"
@@ -17,22 +21,23 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 var (
-	successExitCode	= 0
-	errorExitCode	= 1
+	successExitCode = 0
+	errorExitCode   = 1
 )
 
 type command interface {
-	Name() string		// "foobar"
-	Args() string		// "<baz> [quux...]"
-	ShortHelp() string	// "Foo the first bar"
-	LongHelp() string	// "Foo the first bar meeting the following conditions..."
-	Register(*flag.FlagSet)	// command-specific flags
-	Hidden() bool		// indicates whether the command should be hidden from help output
+	Name() string           // "foobar"
+	Args() string           // "<baz> [quux...]"
+	ShortHelp() string      // "Foo the first bar"
+	LongHelp() string       // "Foo the first bar meeting the following conditions..."
+	Register(*flag.FlagSet) // command-specific flags
+	Hidden() bool           // indicates whether the command should be hidden from help output
 	Run(*dep.Ctx, []string) error
 }
 
@@ -43,21 +48,21 @@ func AmalgomatedMain() {
 		os.Exit(1)
 	}
 	c := &Config{
-		Args:		os.Args,
-		Stdout:		os.Stdout,
-		Stderr:		os.Stderr,
-		WorkingDir:	wd,
-		Env:		os.Environ(),
+		Args:       os.Args,
+		Stdout:     os.Stdout,
+		Stderr:     os.Stderr,
+		WorkingDir: wd,
+		Env:        os.Environ(),
 	}
 	os.Exit(c.Run())
 }
 
 // A Config specifies a full configuration for a dep execution.
 type Config struct {
-	WorkingDir	string		// Where to execute
-	Args		[]string	// Command-line arguments, starting with the program name.
-	Env		[]string	// Environment variables
-	Stdout, Stderr	io.Writer	// Log output
+	WorkingDir     string    // Where to execute
+	Args           []string  // Command-line arguments, starting with the program name.
+	Env            []string  // Environment variables
+	Stdout, Stderr io.Writer // Log output
 }
 
 // Run executes a configuration and returns an exit code.
@@ -196,11 +201,11 @@ func (c *Config) Run() int {
 
 			// Set up dep context.
 			ctx := &dep.Ctx{
-				Out:		outLogger,
-				Err:		errLogger,
-				Verbose:	*verbose,
-				DisableLocking:	getEnv(c.Env, "DEPNOLOCK") != "",
-				Cachedir:	cachedir,
+				Out:            outLogger,
+				Err:            errLogger,
+				Verbose:        *verbose,
+				DisableLocking: getEnv(c.Env, "DEPNOLOCK") != "",
+				Cachedir:       cachedir,
 			}
 
 			GOPATHS := filepath.SplitList(getEnv(c.Env, "GOPATH"))
@@ -224,9 +229,9 @@ func (c *Config) Run() int {
 
 func resetUsage(logger *log.Logger, fs *flag.FlagSet, name, args, longHelp string) {
 	var (
-		hasFlags	bool
-		flagBlock	bytes.Buffer
-		flagWriter	= tabwriter.NewWriter(&flagBlock, 0, 4, 2, ' ', 0)
+		hasFlags   bool
+		flagBlock  bytes.Buffer
+		flagWriter = tabwriter.NewWriter(&flagBlock, 0, 4, 2, ' ', 0)
 	)
 	fs.VisitAll(func(f *flag.Flag) {
 		hasFlags = true
@@ -299,8 +304,8 @@ func getEnv(env []string, key string) string {
 //
 // Copied from cmd/go/internal/help/help.go.
 type commentWriter struct {
-	W		io.Writer
-	wroteSlashes	bool	// Wrote "//" at the beginning of the current line.
+	W            io.Writer
+	wroteSlashes bool // Wrote "//" at the beginning of the current line.
 }
 
 func (c *commentWriter) Write(p []byte) (int, error) {

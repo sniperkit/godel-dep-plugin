@@ -1,3 +1,6 @@
+# Sniperkit-Bot
+# - Status: analyzed
+
 packages:
   dep:
     main: github.com/golang/dep/cmd/dep

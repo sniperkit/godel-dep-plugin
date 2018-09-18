@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -9,12 +14,13 @@ import (
 	"sort"
 
 	"github.com/Masterminds/semver"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/internal/pb"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/internal/pb"
 )
 
 var (
-	none	= noneConstraint{}
-	any	= anyConstraint{}
+	none = noneConstraint{}
+	any  = anyConstraint{}
 )
 
 // A Constraint provides structured limitations on the versions that are
@@ -326,8 +332,8 @@ func (noneConstraint) copyTo(*pb.Constraint) {
 // indicates that, if packages contained in the ProjectIdentifier enter the
 // depgraph, they must do so at a version that is allowed by the Constraint.
 type ProjectConstraint struct {
-	Ident		ProjectIdentifier
-	Constraint	Constraint
+	Ident      ProjectIdentifier
+	Constraint Constraint
 }
 
 // ProjectConstraints is a map of projects, as identified by their import path
@@ -339,9 +345,9 @@ type ProjectConstraint struct {
 type ProjectConstraints map[ProjectRoot]ProjectProperties
 
 type workingConstraint struct {
-	Ident				ProjectIdentifier
-	Constraint			Constraint
-	overrNet, overrConstraint	bool
+	Ident                     ProjectIdentifier
+	Constraint                Constraint
+	overrNet, overrConstraint bool
 }
 
 func pcSliceToMap(l []ProjectConstraint, r ...[]ProjectConstraint) ProjectConstraints {
@@ -349,8 +355,8 @@ func pcSliceToMap(l []ProjectConstraint, r ...[]ProjectConstraint) ProjectConstr
 
 	for _, pc := range l {
 		final[pc.Ident.ProjectRoot] = ProjectProperties{
-			Source:		pc.Ident.Source,
-			Constraint:	pc.Constraint,
+			Source:     pc.Ident.Source,
+			Constraint: pc.Constraint,
 		}
 	}
 
@@ -364,8 +370,8 @@ func pcSliceToMap(l []ProjectConstraint, r ...[]ProjectConstraint) ProjectConstr
 				final[pc.Ident.ProjectRoot] = pp
 			} else {
 				final[pc.Ident.ProjectRoot] = ProjectProperties{
-					Source:		pc.Ident.Source,
-					Constraint:	pc.Constraint,
+					Source:     pc.Ident.Source,
+					Constraint: pc.Constraint,
 				}
 			}
 		}
@@ -381,10 +387,10 @@ func (m ProjectConstraints) asSortedSlice() []ProjectConstraint {
 	for pr, pp := range m {
 		pcs[k] = ProjectConstraint{
 			Ident: ProjectIdentifier{
-				ProjectRoot:	pr,
-				Source:		pp.Source,
+				ProjectRoot: pr,
+				Source:      pp.Source,
 			},
-			Constraint:	pp.Constraint,
+			Constraint: pp.Constraint,
 		}
 		k++
 	}
@@ -420,10 +426,10 @@ func (m ProjectConstraints) overrideAll(pcm ProjectConstraints) (out []workingCo
 func (m ProjectConstraints) override(pr ProjectRoot, pp ProjectProperties) workingConstraint {
 	wc := workingConstraint{
 		Ident: ProjectIdentifier{
-			ProjectRoot:	pr,
-			Source:		pp.Source,
+			ProjectRoot: pr,
+			Source:      pp.Source,
 		},
-		Constraint:	pp.Constraint,
+		Constraint: pp.Constraint,
 	}
 
 	if opp, has := m[pr]; has {

@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -6,7 +11,6 @@ package amalgomated
 
 import (
 	"bytes"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
 	"io/ioutil"
 	"log"
 	"os"
@@ -14,11 +18,13 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/amalgomated_flag"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 const pruneShortHelp = `Pruning is now performed automatically by dep ensure.`
@@ -31,11 +37,11 @@ dep prune will be removed in a future version of dep, causing this command to ex
 type pruneCommand struct {
 }
 
-func (cmd *pruneCommand) Name() string		{ return "prune" }
-func (cmd *pruneCommand) Args() string		{ return "" }
-func (cmd *pruneCommand) ShortHelp() string	{ return pruneShortHelp }
-func (cmd *pruneCommand) LongHelp() string	{ return pruneLongHelp }
-func (cmd *pruneCommand) Hidden() bool		{ return false }
+func (cmd *pruneCommand) Name() string      { return "prune" }
+func (cmd *pruneCommand) Args() string      { return "" }
+func (cmd *pruneCommand) ShortHelp() string { return pruneShortHelp }
+func (cmd *pruneCommand) LongHelp() string  { return pruneLongHelp }
+func (cmd *pruneCommand) Hidden() bool      { return false }
 
 func (cmd *pruneCommand) Register(fs *flag.FlagSet) {
 }
@@ -206,6 +212,6 @@ func deleteDirs(toDelete []string) error {
 
 type byLen []string
 
-func (a byLen) Len() int		{ return len(a) }
-func (a byLen) Swap(i, j int)		{ a[i], a[j] = a[j], a[i] }
-func (a byLen) Less(i, j int) bool	{ return len(a[i]) > len(a[j]) }
+func (a byLen) Len() int           { return len(a) }
+func (a byLen) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a byLen) Less(i, j int) bool { return len(a[i]) > len(a[j]) }

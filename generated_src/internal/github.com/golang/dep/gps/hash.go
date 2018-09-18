@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -15,11 +20,11 @@ import (
 
 // string headers used to demarcate sections in hash input creation
 const (
-	hhConstraints	= "-CONSTRAINTS-"
-	hhImportsReqs	= "-IMPORTS/REQS-"
-	hhIgnores	= "-IGNORES-"
-	hhOverrides	= "-OVERRIDES-"
-	hhAnalyzer	= "-ANALYZER-"
+	hhConstraints = "-CONSTRAINTS-"
+	hhImportsReqs = "-IMPORTS/REQS-"
+	hhIgnores     = "-IGNORES-"
+	hhOverrides   = "-OVERRIDES-"
+	hhAnalyzer    = "-ANALYZER-"
 )
 
 // HashInputs computes a hash digest of all data in SolveParams and the

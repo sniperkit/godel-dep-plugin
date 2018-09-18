@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -349,14 +354,14 @@ func (r *svnRepo) CommitInfo(id string) (*vcs.CommitInfo, error) {
 	}
 
 	type logentry struct {
-		Author	string	`xml:"author"`
-		Date	string	`xml:"date"`
-		Msg	string	`xml:"msg"`
+		Author string `xml:"author"`
+		Date   string `xml:"date"`
+		Msg    string `xml:"msg"`
 	}
 
 	type log struct {
-		XMLName	xml.Name	`xml:"log"`
-		Logs	[]logentry	`xml:"logentry"`
+		XMLName xml.Name   `xml:"log"`
+		Logs    []logentry `xml:"logentry"`
 	}
 
 	logs := new(log)
@@ -370,9 +375,9 @@ func (r *svnRepo) CommitInfo(id string) (*vcs.CommitInfo, error) {
 	}
 
 	ci := &vcs.CommitInfo{
-		Commit:		id,
-		Author:		logs.Logs[0].Author,
-		Message:	logs.Logs[0].Msg,
+		Commit:  id,
+		Author:  logs.Logs[0].Author,
+		Message: logs.Logs[0].Msg,
 	}
 
 	if len(logs.Logs[0].Date) > 0 {

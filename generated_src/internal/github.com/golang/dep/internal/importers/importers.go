@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -7,15 +12,15 @@ package importers
 import (
 	"log"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/glide"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/glock"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/godep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/govend"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/govendor"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/gvt"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/vndr"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/glide"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/glock"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/godep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/govend"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/govendor"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/gvt"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/vndr"
 )
 
 // Importer handles importing configuration from other dependency managers into

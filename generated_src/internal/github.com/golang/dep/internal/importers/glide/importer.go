@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -13,11 +18,12 @@ import (
 	"path/filepath"
 
 	"github.com/go-yaml/yaml"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 )
 
 const glideYamlName = "glide.yaml"
@@ -26,9 +32,9 @@ const glideLockName = "glide.lock"
 // Importer imports glide configuration into the dep configuration format.
 type Importer struct {
 	*base.Importer
-	glideConfig	glideYaml
-	glideLock	glideLock
-	lockFound	bool
+	glideConfig glideYaml
+	glideLock   glideLock
+	lockFound   bool
 }
 
 // NewImporter for glide.
@@ -37,33 +43,33 @@ func NewImporter(logger *log.Logger, verbose bool, sm gps.SourceManager) *Import
 }
 
 type glideYaml struct {
-	Name		string		`yaml:"package"`
-	Ignores		[]string	`yaml:"ignore"`
-	ExcludeDirs	[]string	`yaml:"excludeDirs"`
-	Imports		[]glidePackage	`yaml:"import"`
-	TestImports	[]glidePackage	`yaml:"testImport"`
+	Name        string         `yaml:"package"`
+	Ignores     []string       `yaml:"ignore"`
+	ExcludeDirs []string       `yaml:"excludeDirs"`
+	Imports     []glidePackage `yaml:"import"`
+	TestImports []glidePackage `yaml:"testImport"`
 }
 
 type glideLock struct {
-	Imports		[]glideLockedPackage	`yaml:"imports"`
-	TestImports	[]glideLockedPackage	`yaml:"testImports"`
+	Imports     []glideLockedPackage `yaml:"imports"`
+	TestImports []glideLockedPackage `yaml:"testImports"`
 }
 
 type glidePackage struct {
-	Name		string	`yaml:"package"`
-	Reference	string	`yaml:"version"`	// could contain a semver, tag or branch
-	Repository	string	`yaml:"repo"`
+	Name       string `yaml:"package"`
+	Reference  string `yaml:"version"` // could contain a semver, tag or branch
+	Repository string `yaml:"repo"`
 
 	// Unsupported fields that we will warn if used
-	Subpackages	[]string	`yaml:"subpackages"`
-	OS		string		`yaml:"os"`
-	Arch		string		`yaml:"arch"`
+	Subpackages []string `yaml:"subpackages"`
+	OS          string   `yaml:"os"`
+	Arch        string   `yaml:"arch"`
 }
 
 type glideLockedPackage struct {
-	Name		string	`yaml:"name"`
-	Revision	string	`yaml:"version"`
-	Repository	string	`yaml:"repo"`
+	Name       string `yaml:"name"`
+	Revision   string `yaml:"version"`
+	Repository string `yaml:"repo"`
 }
 
 // Name of the importer.
@@ -169,9 +175,9 @@ func (g *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 		}
 
 		ip := base.ImportedPackage{
-			Name:		pkg.Name,
-			Source:		pkg.Repository,
-			ConstraintHint:	pkg.Reference,
+			Name:           pkg.Name,
+			Source:         pkg.Repository,
+			ConstraintHint: pkg.Reference,
 		}
 		packages = append(packages, ip)
 	}
@@ -185,9 +191,9 @@ func (g *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 		}
 
 		ip := base.ImportedPackage{
-			Name:		pkg.Name,
-			Source:		pkg.Repository,
-			LockHint:	pkg.Revision,
+			Name:     pkg.Name,
+			Source:   pkg.Repository,
+			LockHint: pkg.Revision,
 		}
 		packages = append(packages, ip)
 	}

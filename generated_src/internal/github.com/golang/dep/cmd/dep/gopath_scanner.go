@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -11,32 +16,33 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/paths"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
-	fb "github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/feedback"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/paths"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	fb "github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/feedback"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 // gopathScanner supplies manifest/lock data by scanning the contents of GOPATH
 // It uses its results to fill-in any missing details left by the rootAnalyzer.
 type gopathScanner struct {
-	ctx		*dep.Ctx
-	directDeps	map[gps.ProjectRoot]bool
-	sm		gps.SourceManager
+	ctx        *dep.Ctx
+	directDeps map[gps.ProjectRoot]bool
+	sm         gps.SourceManager
 
-	pd	projectData
-	origM	*dep.Manifest
-	origL	*dep.Lock
+	pd    projectData
+	origM *dep.Manifest
+	origL *dep.Lock
 }
 
 func newGopathScanner(ctx *dep.Ctx, directDeps map[gps.ProjectRoot]bool, sm gps.SourceManager) *gopathScanner {
 	return &gopathScanner{
-		ctx:		ctx,
-		directDeps:	directDeps,
-		sm:		sm,
+		ctx:        ctx,
+		directDeps: directDeps,
+		sm:         sm,
 	}
 }
 
@@ -120,8 +126,8 @@ func (g *gopathScanner) overlay(rootM *dep.Manifest, rootL *dep.Lock) {
 	}
 
 	// Identify projects whose version is unknown and will have to be solved for
-	var missing []string	// all project roots missing from GOPATH
-	var missingVCS []string	// all project roots missing VCS information
+	var missing []string    // all project roots missing from GOPATH
+	var missingVCS []string // all project roots missing VCS information
 	for pr := range g.pd.notondisk {
 		if _, isLocked := lockedProjects[pr]; isLocked {
 			continue
@@ -193,11 +199,11 @@ func getProjectPropertiesFromVersion(v gps.Version) gps.ProjectProperties {
 }
 
 type projectData struct {
-	constraints	gps.ProjectConstraints		// constraints that could be found
-	dependencies	map[gps.ProjectRoot][]string	// all dependencies (imports) found by project root
-	notondisk	map[gps.ProjectRoot]bool	// projects that were not found on disk
-	invalidSVC	map[gps.ProjectRoot]bool	// projects that were found on disk but SVC data could not be read
-	ondisk		map[gps.ProjectRoot]gps.Version	// projects that were found on disk
+	constraints  gps.ProjectConstraints          // constraints that could be found
+	dependencies map[gps.ProjectRoot][]string    // all dependencies (imports) found by project root
+	notondisk    map[gps.ProjectRoot]bool        // projects that were not found on disk
+	invalidSVC   map[gps.ProjectRoot]bool        // projects that were found on disk but SVC data could not be read
+	ondisk       map[gps.ProjectRoot]gps.Version // projects that were found on disk
 }
 
 func (g *gopathScanner) scanGopathForDependencies() (projectData, error) {
@@ -262,7 +268,7 @@ func (g *gopathScanner) scanGopathForDependencies() (projectData, error) {
 	// need to ask gps to solve for us.
 	colors := make(map[string]uint8)
 	const (
-		white	uint8	= iota
+		white uint8 = iota
 		grey
 		black
 	)
@@ -391,18 +397,18 @@ func (g *gopathScanner) scanGopathForDependencies() (projectData, error) {
 	for pkg := range packages {
 		err := dft(pkg)
 		if err != nil {
-			return projectData{}, err	// already errors.Wrap()'d internally
+			return projectData{}, err // already errors.Wrap()'d internally
 		}
 	}
 
 	syncDepGroup.Wait()
 
 	pd := projectData{
-		constraints:	constraints,
-		dependencies:	dependencies,
-		invalidSVC:	invalidSVC,
-		notondisk:	notondisk,
-		ondisk:		ondisk,
+		constraints:  constraints,
+		dependencies: dependencies,
+		invalidSVC:   invalidSVC,
+		notondisk:    notondisk,
+		ondisk:       ondisk,
 	}
 	return pd, nil
 }

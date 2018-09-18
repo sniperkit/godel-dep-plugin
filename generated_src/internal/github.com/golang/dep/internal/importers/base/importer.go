@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -8,30 +13,31 @@ import (
 	"log"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	fb "github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/feedback"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	fb "github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/feedback"
 )
 
 // Importer provides a common implementation for importing from other
 // dependency managers.
 type Importer struct {
-	SourceManager	gps.SourceManager
-	Logger		*log.Logger
-	Verbose		bool
-	Manifest	*dep.Manifest
-	Lock		*dep.Lock
+	SourceManager gps.SourceManager
+	Logger        *log.Logger
+	Verbose       bool
+	Manifest      *dep.Manifest
+	Lock          *dep.Lock
 }
 
 // NewImporter creates a new Importer for embedding in an importer.
 func NewImporter(logger *log.Logger, verbose bool, sm gps.SourceManager) *Importer {
 	return &Importer{
-		Logger:		logger,
-		Verbose:	verbose,
-		Manifest:	dep.NewManifest(),
-		Lock:		&dep.Lock{},
-		SourceManager:	sm,
+		Logger:        logger,
+		Verbose:       verbose,
+		Manifest:      dep.NewManifest(),
+		Lock:          &dep.Lock{},
+		SourceManager: sm,
 	}
 }
 
@@ -67,7 +73,7 @@ func (i *Importer) lookupVersionForLockedProject(pi gps.ProjectIdentifier, c gps
 	}
 
 	var branchConstraint gps.PairedVersion
-	gps.SortPairedForUpgrade(versions)	// Sort versions in asc order
+	gps.SortPairedForUpgrade(versions) // Sort versions in asc order
 	matches := []gps.Version{}
 	for _, v := range versions {
 		if v.Revision() == rev {
@@ -103,21 +109,21 @@ func (i *Importer) lookupVersionForLockedProject(pi gps.ProjectIdentifier, c gps
 // from an external tool's configuration.
 type ImportedPackage struct {
 	// Required. The package path, not necessarily the project root.
-	Name	string
+	Name string
 
 	// Required. Text representing a revision or tag.
-	LockHint	string
+	LockHint string
 
 	// Optional. Alternative source, or fork, for the project.
-	Source	string
+	Source string
 
 	// Optional. Text representing a branch or version.
-	ConstraintHint	string
+	ConstraintHint string
 }
 
 // for the same project root.
 type importedProject struct {
-	Root	gps.ProjectRoot
+	Root gps.ProjectRoot
 	ImportedPackage
 }
 
@@ -196,8 +202,8 @@ func (i *Importer) ImportPackages(packages []ImportedPackage, defaultConstraintF
 
 		pc := gps.ProjectConstraint{
 			Ident: gps.ProjectIdentifier{
-				ProjectRoot:	prj.Root,
-				Source:		source,
+				ProjectRoot: prj.Root,
+				Source:      source,
 			},
 		}
 
@@ -258,8 +264,8 @@ func (i *Importer) ImportPackages(packages []ImportedPackage, defaultConstraintF
 		// Add constraint to manifest that is not empty (has a branch, version or source)
 		if !gps.IsAny(pc.Constraint) || pc.Ident.Source != "" {
 			i.Manifest.Constraints[pc.Ident.ProjectRoot] = gps.ProjectProperties{
-				Source:		pc.Ident.Source,
-				Constraint:	pc.Constraint,
+				Source:     pc.Ident.Source,
+				Constraint: pc.Constraint,
 			}
 			fb.NewConstraintFeedback(pc, fb.DepTypeImported).LogFeedback(i.Logger)
 		}

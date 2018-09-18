@@ -1,15 +1,22 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
 package gps
 
-import "github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/internal/pb"
+import (
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/internal/pb"
+)
 
 // versionUnifier facilitates cross-type version comparison and set operations.
 type versionUnifier struct {
-	b	sourceBridge
-	mtr	*metrics
+	b   sourceBridge
+	mtr *metrics
 }
 
 // pairVersion takes an UnpairedVersion and attempts to pair it with an

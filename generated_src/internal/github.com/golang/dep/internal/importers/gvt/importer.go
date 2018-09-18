@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -11,10 +16,11 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 )
 
 const gvtPath = "vendor" + string(os.PathSeparator) + "manifest"
@@ -22,7 +28,7 @@ const gvtPath = "vendor" + string(os.PathSeparator) + "manifest"
 // Importer imports gvt configuration into the dep configuration format.
 type Importer struct {
 	*base.Importer
-	gvtConfig	gvtManifest
+	gvtConfig gvtManifest
 }
 
 // NewImporter for gvt. It handles gb (gb-vendor) too as they share a common manifest file & format
@@ -35,10 +41,10 @@ type gvtManifest struct {
 }
 
 type gvtPkg struct {
-	ImportPath	string
-	Repository	string
-	Revision	string
-	Branch		string
+	ImportPath string
+	Repository string
+	Revision   string
+	Branch     string
 }
 
 // Name of the importer.
@@ -117,10 +123,10 @@ func (g *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 		}
 
 		ip := base.ImportedPackage{
-			Name:		pkg.ImportPath,
-			Source:		pkg.Repository,
-			LockHint:	pkg.Revision,
-			ConstraintHint:	contstraintHint,
+			Name:           pkg.ImportPath,
+			Source:         pkg.Repository,
+			LockHint:       pkg.Revision,
+			ConstraintHint: contstraintHint,
 		}
 		packages = append(packages, ip)
 	}

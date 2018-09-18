@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -10,9 +15,10 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/fs"
 )
 
 // Ctx defines the supporting context of dep.
@@ -34,13 +40,13 @@ import (
 //	}
 //
 type Ctx struct {
-	WorkingDir	string		// Where to execute.
-	GOPATH		string		// Selected Go path, containing WorkingDir.
-	GOPATHs		[]string	// Other Go paths.
-	Out, Err	*log.Logger	// Required loggers.
-	Verbose		bool		// Enables more verbose logging.
-	DisableLocking	bool		// When set, no lock file will be created to protect against simultaneous dep processes.
-	Cachedir	string		// Cache directory loaded from environment.
+	WorkingDir     string      // Where to execute.
+	GOPATH         string      // Selected Go path, containing WorkingDir.
+	GOPATHs        []string    // Other Go paths.
+	Out, Err       *log.Logger // Required loggers.
+	Verbose        bool        // Enables more verbose logging.
+	DisableLocking bool        // When set, no lock file will be created to protect against simultaneous dep processes.
+	Cachedir       string      // Cache directory loaded from environment.
 }
 
 // SetPaths sets the WorkingDir and GOPATHs fields. If GOPATHs is empty, then
@@ -99,9 +105,9 @@ func (c *Ctx) SourceManager() (*gps.SourceMgr, error) {
 	}
 
 	return gps.NewSourceManager(gps.SourceManagerConfig{
-		Cachedir:	cachedir,
-		Logger:		c.Out,
-		DisableLocking:	c.DisableLocking,
+		Cachedir:       cachedir,
+		Logger:         c.Out,
+		DisableLocking: c.DisableLocking,
 	})
 }
 

@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -14,8 +19,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 // This is probably the simplest possible implementation of gps. It does the
@@ -35,9 +40,9 @@ func AmalgomatedMain() {
 
 	// Set up params, including tracing
 	params := gps.SolveParameters{
-		RootDir:		root,
-		TraceLogger:		log.New(os.Stdout, "", 0),
-		ProjectAnalyzer:	NaiveAnalyzer{},
+		RootDir:         root,
+		TraceLogger:     log.New(os.Stdout, "", 0),
+		ProjectAnalyzer: NaiveAnalyzer{},
 	}
 	// Perform static analysis on the current project to find all of its imports.
 	params.RootPackageTree, _ = pkgtree.ListPackages(root, importroot)
@@ -73,7 +78,7 @@ func (a NaiveAnalyzer) DeriveManifestAndLock(path string, n gps.ProjectRoot) (gp
 // of gps' hashing memoization scheme.
 func (a NaiveAnalyzer) Info() gps.ProjectAnalyzerInfo {
 	return gps.ProjectAnalyzerInfo{
-		Name:		"example-analyzer",
-		Version:	1,
+		Name:    "example-analyzer",
+		Version: 1,
 	}
 }

@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -10,7 +15,7 @@ import (
 	"path/filepath"
 	"sync/atomic"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 // sourceBridge is an adapter to SourceManagers that tailor operations for a
@@ -47,26 +52,26 @@ type sourceBridge interface {
 // the inputs - is achieved.
 type bridge struct {
 	// The underlying, adapted-to SourceManager
-	sm	SourceManager
+	sm SourceManager
 
 	// The solver which we're assisting.
 	//
 	// The link between solver and bridge is circular, which is typically a bit
 	// awkward, but the bridge needs access to so many of the input arguments
 	// held by the solver that it ends up being easier and saner to do this.
-	s	*solver
+	s *solver
 
 	// Map of project root name to their available version list. This cache is
 	// layered on top of the proper SourceManager's cache; the only difference
 	// is that this keeps the versions sorted in the direction required by the
 	// current solve run.
-	vlists	map[ProjectIdentifier][]Version
+	vlists map[ProjectIdentifier][]Version
 
 	// Indicates whether lock breaking has already been run
-	lockbroken	int32
+	lockbroken int32
 
 	// Whether to sort version lists for downgrade.
-	down	bool
+	down bool
 
 	// The cancellation context provided to the solver. Threading it through the
 	// various solver methods is needlessly verbose so long as we maintain the
@@ -78,10 +83,10 @@ type bridge struct {
 // mkBridge creates a bridge
 func mkBridge(s *solver, sm SourceManager, down bool) *bridge {
 	return &bridge{
-		sm:	sm,
-		s:	s,
-		down:	down,
-		vlists:	make(map[ProjectIdentifier][]Version),
+		sm:     sm,
+		s:      s,
+		down:   down,
+		vlists: make(map[ProjectIdentifier][]Version),
 	}
 }
 

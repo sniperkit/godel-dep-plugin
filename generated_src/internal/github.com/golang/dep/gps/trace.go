@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -9,16 +14,16 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 const (
-	successChar	= "✓"
-	successCharSp	= successChar + " "
-	failChar	= "✗"
-	failCharSp	= failChar + " "
-	backChar	= "←"
-	innerIndent	= "  "
+	successChar   = "✓"
+	successCharSp = successChar + " "
+	failChar      = "✗"
+	failCharSp    = failChar + " "
+	backChar      = "←"
+	innerIndent   = "  "
 )
 
 func (s *solver) traceCheckPkgs(bmi bimodalIdentifier) {

@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -347,8 +352,8 @@ func ReadActualFilenames(dirPath string, names []string) (map[string]string, err
 }
 
 var (
-	errSrcNotDir	= errors.New("source is not a directory")
-	errDstExist	= errors.New("destination already exists")
+	errSrcNotDir = errors.New("source is not a directory")
+	errDstExist  = errors.New("destination already exists")
 )
 
 // CopyDir recursively copies a directory tree, attempting to preserve permissions.

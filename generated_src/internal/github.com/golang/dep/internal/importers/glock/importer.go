@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2016 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -12,10 +17,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 )
 
 const glockfile = "GLOCKFILE"
@@ -24,7 +30,7 @@ const glockfile = "GLOCKFILE"
 type Importer struct {
 	*base.Importer
 
-	packages	[]glockPackage
+	packages []glockPackage
 }
 
 // NewImporter for glock.
@@ -59,8 +65,8 @@ func (g *Importer) Import(dir string, pr gps.ProjectRoot) (*dep.Manifest, *dep.L
 }
 
 type glockPackage struct {
-	importPath	string
-	revision	string
+	importPath string
+	revision   string
 }
 
 func (g *Importer) load(projectDir string) error {
@@ -99,8 +105,8 @@ func (g *Importer) load(projectDir string) error {
 func parseGlockLine(line string) (*glockPackage, error) {
 	fields := strings.Fields(line)
 	switch len(fields) {
-	case 2:	// Valid.
-	case 0:	// Skip empty lines.
+	case 2: // Valid.
+	case 0: // Skip empty lines.
 		return nil, nil
 	default:
 		return nil, fmt.Errorf("invalid glock configuration: %s", line)
@@ -111,8 +117,8 @@ func parseGlockLine(line string) (*glockPackage, error) {
 		return nil, nil
 	}
 	return &glockPackage{
-		importPath:	fields[0],
-		revision:	fields[1],
+		importPath: fields[0],
+		revision:   fields[1],
 	}, nil
 }
 
@@ -140,8 +146,8 @@ func (g *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 		}
 
 		packages = append(packages, base.ImportedPackage{
-			Name:		pkg.importPath,
-			LockHint:	pkg.revision,
+			Name:     pkg.importPath,
+			LockHint: pkg.revision,
 		})
 	}
 

@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -11,10 +16,11 @@ import (
 	"path/filepath"
 
 	"github.com/go-yaml/yaml"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 )
 
 // ToDo: govend supports json and xml formats as well and we will add support for other formats in next PR - @RaviTezu
@@ -24,7 +30,7 @@ const govendYAMLName = "vendor.yml"
 // Importer imports govend configuration in to the dep configuration format.
 type Importer struct {
 	*base.Importer
-	yaml	govendYAML
+	yaml govendYAML
 }
 
 // NewImporter for govend.
@@ -37,8 +43,8 @@ type govendYAML struct {
 }
 
 type govendPackage struct {
-	Path		string	`yaml:"path"`
-	Revision	string	`yaml:"rev"`
+	Path     string `yaml:"path"`
+	Revision string `yaml:"rev"`
 }
 
 // Name of the importer.
@@ -110,8 +116,8 @@ func (g *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 		}
 
 		ip := base.ImportedPackage{
-			Name:		pkg.Path,
-			LockHint:	pkg.Revision,
+			Name:     pkg.Path,
+			LockHint: pkg.Revision,
 		}
 		packages = append(packages, ip)
 	}

@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -11,10 +16,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/internal/importers/base"
 )
 
 func vndrFile(dir string) string {
@@ -24,7 +30,7 @@ func vndrFile(dir string) string {
 // Importer imports vndr configuration into the dep configuration format.
 type Importer struct {
 	*base.Importer
-	packages	[]vndrPackage
+	packages []vndrPackage
 }
 
 // NewImporter for vndr.
@@ -33,7 +39,7 @@ func NewImporter(log *log.Logger, verbose bool, sm gps.SourceManager) *Importer 
 }
 
 // Name of the importer.
-func (v *Importer) Name() string	{ return "vndr" }
+func (v *Importer) Name() string { return "vndr" }
 
 // HasDepMetadata checks if a directory contains config that the importer can handle.
 func (v *Importer) HasDepMetadata(dir string) bool {
@@ -104,9 +110,9 @@ func (v *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 		}
 
 		ip := base.ImportedPackage{
-			Name:		pkg.importPath,
-			Source:		pkg.repository,
-			LockHint:	pkg.reference,
+			Name:     pkg.importPath,
+			Source:   pkg.repository,
+			LockHint: pkg.reference,
 		}
 		packages = append(packages, ip)
 	}
@@ -115,9 +121,9 @@ func (v *Importer) convert(pr gps.ProjectRoot) (*dep.Manifest, *dep.Lock) {
 }
 
 type vndrPackage struct {
-	importPath	string
-	reference	string
-	repository	string
+	importPath string
+	reference  string
+	repository string
 }
 
 func parseVndrLine(line string) (*vndrPackage, error) {
@@ -138,8 +144,8 @@ func parseVndrLine(line string) (*vndrPackage, error) {
 	}
 
 	pkg := &vndrPackage{
-		importPath:	parts[0],
-		reference:	parts[1],
+		importPath: parts[0],
+		reference:  parts[1],
 	}
 	if len(parts) == 3 {
 		pkg.repository = parts[2]

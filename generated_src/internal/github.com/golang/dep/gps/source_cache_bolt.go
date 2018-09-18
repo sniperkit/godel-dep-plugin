@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 // Copyright 2017 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -12,18 +17,19 @@ import (
 	"time"
 
 	"github.com/boltdb/bolt"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/internal/pb"
-	"github.com/palantir/godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 	"github.com/golang/protobuf/proto"
 	"github.com/jmank88/nuts"
 	"github.com/pkg/errors"
+
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/internal/pb"
+	"github.com/sniperkit/snk.fork.palantir-godel-dep-plugin/generated_src/internal/github.com/golang/dep/gps/pkgtree"
 )
 
 // boltCache manages a bolt.DB cache and provides singleSourceCaches.
 type boltCache struct {
-	db	*bolt.DB
-	epoch	int64		// getters will not return values older than this unix timestamp
-	logger	*log.Logger	// info logging
+	db     *bolt.DB
+	epoch  int64       // getters will not return values older than this unix timestamp
+	logger *log.Logger // info logging
 }
 
 // newBoltCache returns a new boltCache backed by a BoltDB file under the cache directory.
@@ -44,18 +50,18 @@ func newBoltCache(cd string, epoch int64, logger *log.Logger) (*boltCache, error
 		return nil, errors.Wrapf(err, "failed to open BoltDB cache file %q", path)
 	}
 	return &boltCache{
-		db:	db,
-		epoch:	epoch,
-		logger:	logger,
+		db:     db,
+		epoch:  epoch,
+		logger: logger,
 	}, nil
 }
 
 // newSingleSourceCache returns a new singleSourceCache for pi.
 func (c *boltCache) newSingleSourceCache(pi ProjectIdentifier) singleSourceCache {
 	return &singleSourceCacheBolt{
-		boltCache:	c,
-		pi:		pi,
-		sourceName:	[]byte(pi.normalizedSource()),
+		boltCache:  c,
+		pi:         pi,
+		sourceName: []byte(pi.normalizedSource()),
 	}
 }
 
@@ -101,8 +107,8 @@ func (c *boltCache) close() error {
 //	Values: Unpaired Versions serialized via ConstraintMsg
 type singleSourceCacheBolt struct {
 	*boltCache
-	pi		ProjectIdentifier
-	sourceName	[]byte
+	pi         ProjectIdentifier
+	sourceName []byte
 }
 
 func (s *singleSourceCacheBolt) setManifestAndLock(rev Revision, ai ProjectAnalyzerInfo, m Manifest, l Lock) {
